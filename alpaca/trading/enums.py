@@ -114,6 +114,7 @@ class OrderSide(str, Enum):
 
     BUY = "buy"
     SELL = "sell"
+    SELL_SHORT = 'sell_short'
 
 
 class OrderStatus(str, Enum):
