@@ -413,8 +413,8 @@ class TrailingStopOrderRequest(OrderRequest):
 
         super().__init__(**data)
 
-    @root_validator
-    def root_validator(cls, values):
+    @root_validator(allow_reuse=True)
+    def check_trial(cls, values):
 
         trail_percent_set = (
             "trail_percent" in values and values["trail_percent"] is not None
@@ -452,8 +452,8 @@ class GetCorporateAnnouncementsRequest(NonEmptyRequest):
     cusip: Optional[str]
     date_type: Optional[CorporateActionDateType]
 
-    @root_validator
-    def root_validator(cls, values):
+    @root_validator(allow_reuse=True)
+    def check_since_until(cls, values):
 
         since = values.get("since")
         until = values.get("until")
