@@ -32,8 +32,8 @@ class ClosePositionRequest(NonEmptyRequest):
     qty: Optional[str]
     percentage: Optional[str]
 
-    @root_validator()
-    def check_qty(cls, values: dict) -> dict:
+    @root_validator(allow_reuse=True)
+    def check_qty(cls, values):
         if "qty" not in values or "percentage" not in values:
             return values
 
