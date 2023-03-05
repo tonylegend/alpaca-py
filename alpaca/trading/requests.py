@@ -103,8 +103,8 @@ class UpdateWatchlistRequest(NonEmptyRequest):
     name: Optional[str]
     symbols: Optional[List[str]]
 
-    @root_validator()
-    def root_validator(cls, values: dict) -> dict:
+    @root_validator(allow_reuse=True)
+    def check_name_symbols(cls, values):
         if ("name" not in values or values["name"] is None) and (
             "symbols" not in values or values["symbols"] is None
         ):
@@ -251,8 +251,8 @@ class OrderRequest(NonEmptyRequest):
     take_profit: Optional[TakeProfitRequest]
     stop_loss: Optional[StopLossRequest]
 
-    @root_validator()
-    def root_validator(cls, values: dict) -> dict:
+    @root_validator(allow_reuse=True)
+    def check_qty_set(cls, values):
 
         qty_set = "qty" in values and values["qty"] is not None
         notional_set = "notional" in values and values["notional"] is not None
@@ -413,8 +413,8 @@ class TrailingStopOrderRequest(OrderRequest):
 
         super().__init__(**data)
 
-    @root_validator()
-    def root_validator(cls, values: dict) -> dict:
+    @root_validator
+    def root_validator(cls, values):
 
         trail_percent_set = (
             "trail_percent" in values and values["trail_percent"] is not None
@@ -452,8 +452,8 @@ class GetCorporateAnnouncementsRequest(NonEmptyRequest):
     cusip: Optional[str]
     date_type: Optional[CorporateActionDateType]
 
-    @root_validator()
-    def root_validator(cls, values: dict) -> dict:
+    @root_validator
+    def root_validator(cls, values):
 
         since = values.get("since")
         until = values.get("until")
